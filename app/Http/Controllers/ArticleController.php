@@ -28,12 +28,19 @@ class ArticleController extends Controller
     {
 
         // UNSECURE
-        $articles = Article::whereRaw("title like '%{$request->search}%'")->get();
+        // $articles = Article::whereRaw("title like '%{$request->search}%'")->get();
+
+        // Validazione ricerca
+        $validated = $request->validate([
+            'search' => 'required|string|min:2|max:100',
+        ]);
+
+        $search = trim($validated['search']);
 
         // SECURE
-        // $articles = Article::where('title', 'LIKE', "%{$request->search}%")
-        //                     ->orWhere('content', 'LIKE', "%{$request->search}%")
-        // ->get();
+        $articles = Article::where('title', 'LIKE', "%{$search}%")
+            ->orWhere('content', 'LIKE', "%{$search}%")
+            ->get();
 
         return view('articles.index', compact('articles'));
     }

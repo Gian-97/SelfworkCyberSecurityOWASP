@@ -129,7 +129,10 @@ Modificate line di codice in config\database.php e vendor\laravel\framework\conf
   - Form per la destroy dell articolo e nuova rotta associata con metodo delete
 - pulsante delete nella user profile /profile protetto con form
 - Protetta le rotte dell admin con un midleware
-- 
+
 **Risoluzione Cryptographic Failures:**
 - modifica metodo di hashing da md5 a sha256, per le immagini degli avatar(profilo)
 - aggiunto utilizzo di pepper e salting per la password
+
+**Risuluzione injection searchbar**
+- Modificato il metodo search e aggiunta la validazione dell'input
