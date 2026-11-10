@@ -5,6 +5,7 @@ namespace App\Actions\Fortify;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Laravel\Fortify\Http\Requests\LoginRequest;
 
 class AuthenticateUser
@@ -16,9 +17,26 @@ class AuthenticateUser
         $user = User::where('email', $credentials['email'])->first();
         if ($user) {
             $pepper = config('app.pepper');
-            $passwordWithSaltAndPepper = $credentials['password'] . $user->salt . $pepper;
-            // dd($passwordWithSaltAndPepper, $user->password);
-            if (Hash::check($passwordWithSaltAndPepper, $user->password)) {
+            $passwordMatches = false;
+
+            // Se l'utente ha un salt, utilizza il nuovo formato della password.
+            if ($user->salt !== null) {
+                $passwordWithSaltAndPepper = $credentials['password'] . $user->salt . $pepper;
+                $passwordMatches = Hash::check($passwordWithSaltAndPepper, $user->password);
+            } else {
+                // Se il salt non esiste, verifica la password nel vecchio formato.
+                $passwordMatches = Hash::check($credentials['password'], $user->password);
+            }
+
+            // Continua solo se la password inserita corrisponde all'hash salvato.
+            if ($passwordMatches) {
+                // Dopo un login corretto, aggiorna gli utenti al nuovo formato.
+                if ($user->salt === null) {
+                    $user->salt = Str::random(32);
+                    $user->password = Hash::make($credentials['password'] . $user->salt . $pepper);
+                    $user->save();
+                }
+
                 Auth::login($user);
                 return $user;
             }

@@ -36,6 +36,13 @@ class UserSeeder extends Seeder
                 'is_admin' => false,
                 'avatar' => 'https://ui-avatars.com/api/?name=Regular+User&background=9B59B6&color=fff',
             ],
+            [
+                'name' => 'Hacker User',
+                'email' => 'hacker@example.com',
+                'password' => 'password',
+                'is_admin' => false,
+                'avatar' => 'https://ui-avatars.com/api/?name=Regular+User&background=9B59B6&color=fff',
+            ],
         ];
 
         foreach ($testUsers as $user) {
@@ -53,4 +60,4 @@ class UserSeeder extends Seeder
         User::factory(5)->create();
         User::factory(2)->admin()->create();
     }
-} 
+}

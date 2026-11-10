@@ -136,3 +136,8 @@ Modificate line di codice in config\database.php e vendor\laravel\framework\conf
 
 **Risuluzione injection searchbar**
 - Modificato il metodo search e aggiunta la validazione dell'input
+
+**Risoluzione insecure design**
+- Creazione di un nuovo middleware, che gestisce un numero max di richieste ed applica eventuale blocco su IP
+- Collegato alla rotta relativa ai commenti  
+- AGGIORNAMENTO Cryptographic Failures, i vecchi utenti senza salt non riuscivano a loggare ora viene aggiunto al primo login corretto.
