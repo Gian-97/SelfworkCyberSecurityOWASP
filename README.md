@@ -150,3 +150,8 @@ Modificate line di codice in config\database.php e vendor\laravel\framework\conf
   - nome non originle sul db
 - In userController aggiunta funzione downloadFile
 - Modificato il profilo dell utente per caricare e mostrare/scaricare i propri file
+
+**Vulnerable and Outdated Components**
+- Aggiornato package-lock.json
+- Aggiornato composer.lock
+(entrambi verificati con audit e successivamente lanciato la "update")
