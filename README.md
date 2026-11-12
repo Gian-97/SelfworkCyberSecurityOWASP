@@ -141,3 +141,12 @@ Modificate line di codice in config\database.php e vendor\laravel\framework\conf
 - Creazione di un nuovo middleware, che gestisce un numero max di richieste ed applica eventuale blocco su IP
 - Collegato alla rotta relativa ai commenti  
 - AGGIORNAMENTO Cryptographic Failures, i vecchi utenti senza salt non riuscivano a loggare ora viene aggiunto al primo login corretto.
+
+**Security Misconfiguration**
+- Creato model file, migrazione file, rotte (upload e download) 
+- Gestiti controlli sul caricamento dei file (all interno di userController)
+  - Estension
+  - path non publico
+  - nome non originle sul db
+- In userController aggiunta funzione downloadFile
+- Modificato il profilo dell utente per caricare e mostrare/scaricare i propri file

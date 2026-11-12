@@ -93,9 +93,35 @@
         </div>
         <!-- Documents Section -->
         <div class="card shadow-sm border-0 p-4 mb-4">
-          <h3 class="fw-semibold mb-3"><i class="bi bi-file-earmark-text me-2"></i>Documents</h3>
-          <a href="{{route('download','filename=privacy.pdf')}}" class="d-block mb-2 text-decoration-none text-info fw-semibold"><i class="bi bi-file-earmark-pdf me-2"></i>Privacy policy</a>
-          <a href="{{route('download','filename=cookie-policy.pdf')}}" class="d-block text-decoration-none text-info fw-semibold"><i class="bi bi-file-earmark-pdf me-2"></i>Cookie policy</a>
+          <h3 class="fw-semibold mb-3"><i class="bi bi-file-earmark-text me-2"></i>Documenti</h3>
+          {{-- Form caricamento file --}}
+          <form method="POST" action="{{ route('files.upload') }}" enctype="multipart/form-data" class="mb-4">
+            @csrf
+            <label for="file" class="form-label fw-semibold">Carica un file</label>
+            <div class="input-group">
+              <input id="file" type="file" name="file" class="form-control" accept=".jpg,.jpeg,.png,.gif,.pdf" required>
+              <button type="submit" class="btn btn-primary">
+                <i class="bi bi-upload me-1"></i>Carica
+              </button>
+            </div>
+            @error('file')
+              <div class="text-danger small mt-2">{{ $message }}</div>
+            @enderror
+            @if (session('message'))
+              <div class="text-success small mt-2">{{ session('message') }}</div>
+            @endif
+          </form>
+          {{-- Lista file caricati --}}
+          <h5 class="fw-semibold mb-3">I tuoi file caricati</h5>
+          @forelse ($user->files as $file)
+              <a href="{{ route('files.download', $file) }}" class="text-truncate me-3 text-decoration-none text-info fw-semibold">
+                <i class="bi bi-file-earmark me-2"></i>{{ $file->name }}
+              </a>
+          @empty
+            <p class="text-muted mb-3">Nessun file caricato.</p>
+          @endforelse
+          {{-- <a href="{{route('download','filename=privacy.pdf')}}" class="d-block mb-2 text-decoration-none text-info fw-semibold"><i class="bi bi-file-earmark-pdf me-2"></i>Privacy policy</a> --}}
+          {{-- <a href="{{route('download','filename=cookie-policy.pdf')}}" class="d-block text-decoration-none text-info fw-semibold"><i class="bi bi-file-earmark-pdf me-2"></i>Cookie policy</a> --}}
         </div>
 
       </div>

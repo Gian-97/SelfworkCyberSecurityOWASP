@@ -46,6 +46,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/users/name/change',[UserController::class,'changeName'])->name('change.name');
     Route::get('/users/email/change',[UserController::class,'changeEmail'])->name('change.email');
     Route::post('/users/img/change',[UserController::class,'changeImg'])->name('change.img');
+    // Upload e download file dell utente
+    Route::post('/users/files/upload', [UserController::class, 'upload'])->name('files.upload');
+    Route::get('/users/files/{file}/download', [UserController::class, 'downloadFile'])->name('files.download');
 
     Route::get('/download-privacy', [UserController::class,'download'])->name('download');
     
