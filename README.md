@@ -155,3 +155,7 @@ Modificate line di codice in config\database.php e vendor\laravel\framework\conf
 - Aggiornato package-lock.json
 - Aggiornato composer.lock
 (entrambi verificati con audit e successivamente lanciato la "update")
+
+**Identification and Authentication Failures**
+- Impostata tramite .env che la sessione scade alla chiusura
+- Modificato regole password laravel/fortify, modificato e indicato all utente durante la registrazione le nuove regole

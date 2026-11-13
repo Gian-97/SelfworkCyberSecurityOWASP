@@ -18,6 +18,17 @@
               <div class="mb-3">
                 <label for="registerPassword" class="form-label fw-semibold">Password</label>
                 <input type="password" class="form-control rounded-pill" id="registerPassword" placeholder="Strong password here" name="password" required>
+                {{-- <div class="form-text">La password deve avere:</div>
+                <ul id="passwordRequirements" class="small list-unstyled mb-0" aria-live="polite">
+                  <li class="text-danger">Almeno 12 caratteri</li>
+                  <li class="text-danger">Almeno 2 lettere</li>
+                  <li class="text-danger">Almeno 2 numeri</li>
+                  <li class="text-danger">Lettere maiuscole e minuscole</li>
+                  <li class="text-danger">Almeno 1 simbolo</li>
+                </ul> --}}
+                @error('password')
+                  <div class="text-danger small mt-1">{{ $message }}</div>
+                @enderror
               </div>
               <div class="mb-4">
                 <label for="registerPasswordConfirm" class="form-label fw-semibold">Confirm Password</label>
