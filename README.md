@@ -162,3 +162,8 @@ Modificate line di codice in config\database.php e vendor\laravel\framework\conf
 
 **Software and Data Integrity Failures**
 - Nessuna modifica effettuata
+
+**Security Logging and Monitory Failures**
+- Inserita cattura del log.info durante il login di un utente
+- Inserito log.warning sullo blocco dell ip
+- Installato opcodesio/log-viewer

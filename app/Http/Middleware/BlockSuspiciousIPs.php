@@ -35,7 +35,7 @@ class BlockSuspiciousIPs
             $attempts = Cache::increment($key);
             if ($attempts > $this->maxAttempts) {
                 Cache::put($key . ':blecked', true, $this->blockMinutes * 60);
-                Log::warning("IP $ip bloccato per attività sospette.");
+                Log::warning("IP $ip bloccato per attività sospette, troppe richieste. Utente: " . ($request->user() ? $request->user()->email : 'Guest'));
                 Session::flash('errors', 'Il tuo IP è stato bloccato per attività sospette.');
                 return redirect()->back();
             }

@@ -5,6 +5,7 @@ namespace App\Actions\Fortify;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Http\Requests\LoginRequest;
 
@@ -38,6 +39,7 @@ class AuthenticateUser
                 }
 
                 Auth::login($user);
+                Log::info('User '.$user->email.' logged in at '.now().' from '.$request->ip());
                 return $user;
             }
         }
