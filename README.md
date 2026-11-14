@@ -159,3 +159,6 @@ Modificate line di codice in config\database.php e vendor\laravel\framework\conf
 **Identification and Authentication Failures**
 - Impostata tramite .env che la sessione scade alla chiusura
 - Modificato regole password laravel/fortify, modificato e indicato all utente durante la registrazione le nuove regole
+
+**Software and Data Integrity Failures**
+- Nessuna modifica effettuata
