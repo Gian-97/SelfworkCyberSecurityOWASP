@@ -166,4 +166,13 @@ Modificate line di codice in config\database.php e vendor\laravel\framework\conf
 **Security Logging and Monitory Failures**
 - Inserita cattura del log.info durante il login di un utente
 - Inserito log.warning sullo blocco dell ip
-- Installato opcodesio/log-viewer
+- Installato opcodesio/log-viewer, ora visibili su [http://127.0.0.1:8000/log-viewer] non protetta
+
+**Server-Side Request Forgery (SSRF)**
+Nella sezioni di creazione articolo, precisamente nel caricamento immagini. È stato modificato il controlle di livewire
+- Scomposizione e validazione dell url
+- Accettato solo indirizzi sicuri HTTPS
+- Bloccare le richieste che puntano al localhost
+- Impostato tempo massimo di richiesta, bloccato reindirizzamenti e verifica del certificato ssl
+- Accettazione di file con estensioni di specifiche (jpeg, png, gif, webp)
+- grandezza immagine massima
