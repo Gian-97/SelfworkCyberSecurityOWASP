@@ -34,7 +34,12 @@ class UserController extends Controller
 
         $user = User::find($id);
 
-        $user->update($request->all());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        ]);
+
+        $user->update($validated);
 
         return back()->with('message', 'User updated');
     }
@@ -108,8 +113,12 @@ class UserController extends Controller
 
     public function download(Request $request)
     {
-        return response()->download(storage_path('app/private/' . $request->get('filename')));
+
+        return Storage::disk('local')->download($request->input('filename'));
+
+        // return response()->download(storage_path('app/private/' . $request->get('filename')));
     }
+
 
     public function downloadFile(File $file)
     {
@@ -166,31 +175,30 @@ class UserController extends Controller
 
         // Definisci le estensioni e i MIME type permessi
 
-        $allowedExtensions= ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf'];
 
-        $allowedMimeTypes= ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
+        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/gif', 'application/pdf'];
 
-        $file =$request->file('file');
+        $file = $request->file('file');
 
         $extension = strtolower($file->getClientOriginalExtension());
 
         $mimeType = $file->getMimeType();
 
-        if (!in_array($extension, $allowedExtensions) || !in_array($mimeType, $allowedMimeTypes)){
+        if (!in_array($extension, $allowedExtensions) || !in_array($mimeType, $allowedMimeTypes)) {
 
-        return back()->withErrors('File type not allowed');
-
+            return back()->withErrors('File type not allowed');
         }
 
-         $filename = $file->getClientOriginalName();
+        $filename = $file->getClientOriginalName();
 
         // Genera un nome sicuro
 
-        $fileuid = uniqid().'.'.$extension;
+        $fileuid = uniqid() . '.' . $extension;
 
         // Salva in una cartella non pubblica (storage/app/private/docs/users/($user->id})
 
-        $path= $file->storeAs("docs/users/{$user->id}", $fileuid, 'local');
+        $path = $file->storeAs("docs/users/{$user->id}", $fileuid, 'local');
 
 
 
@@ -198,11 +206,11 @@ class UserController extends Controller
 
         File::create([
 
-        'name' => $filename,
+            'name' => $filename,
 
-        'user_id' => $user->id,
+            'user_id' => $user->id,
 
-        'uid'=> $fileuid,
+            'uid' => $fileuid,
 
         ]);
 

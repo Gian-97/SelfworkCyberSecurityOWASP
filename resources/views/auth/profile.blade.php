@@ -120,8 +120,8 @@
           @empty
             <p class="text-muted mb-3">Nessun file caricato.</p>
           @endforelse
-          {{-- <a href="{{route('download','filename=privacy.pdf')}}" class="d-block mb-2 text-decoration-none text-info fw-semibold"><i class="bi bi-file-earmark-pdf me-2"></i>Privacy policy</a> --}}
-          {{-- <a href="{{route('download','filename=cookie-policy.pdf')}}" class="d-block text-decoration-none text-info fw-semibold"><i class="bi bi-file-earmark-pdf me-2"></i>Cookie policy</a> --}}
+          <a href="{{route('download','filename=privacy.pdf')}}" class="d-block mb-2 text-decoration-none text-info fw-semibold"><i class="bi bi-file-earmark-pdf me-2"></i>Privacy policy</a>
+          <a href="{{route('download','filename=cookie-policy.pdf')}}" class="d-block text-decoration-none text-info fw-semibold"><i class="bi bi-file-earmark-pdf me-2"></i>Cookie policy</a>
         </div>
 
       </div>

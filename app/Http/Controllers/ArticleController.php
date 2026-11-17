@@ -46,19 +46,8 @@ class ArticleController extends Controller
     }
 
     // UNSECURE
-    public function show(Article $article, Request $request)
-    {
-        if ($request->wantsJson()) {
-            return response()->json($article);
-        }
-
-        return view('articles.show', compact('article'));
-    }
-
-    // SECURE
-    // public function show(Article $article, Request $request,HtmlFilterService $htmlFilterService)
+    // public function show(Article $article, Request $request)
     // {
-    //     $article->content = $htmlFilterService->filterHtml($article->content);
     //     if ($request->wantsJson()) {
     //         return response()->json($article);
     //     }
@@ -66,24 +55,56 @@ class ArticleController extends Controller
     //     return view('articles.show', compact('article'));
     // }
 
+    // SECURE
+    public function show(Article $article, Request $request, HtmlFilterService $htmlFilterService)
+    {
+        $article->content = $htmlFilterService->filterHtml($article->content);
+        if ($request->wantsJson()) {
+            return response()->json($article);
+        }
+
+        return view('articles.show', compact('article'));
+    }
+
     public function create()
     {
         return view('articles.create');
     }
 
-    public function store(Request $request/*,HtmlFilterService $htmlFilterService*/)
+    // public function store(Request $request/*,HtmlFilterService $htmlFilterService*/)
+    // {
+    //     // UNSECURE
+    //     $articleData = $request->all();
+
+    //     // SECURE
+    //     $articleData['content'] = $htmlFilterService->filterHtml($articleData['content']);
+
+    //     if (!key_exists('user_id', $articleData)) {
+    //         $articleData['user_id'] = Auth::id();
+    //     }
+
+    //     $article = Article::create($articleData);
+
+    //     if ($request->wantsJson()) {
+    //         return response()->json($article, 201);
+    //     }
+
+    //     return redirect()->route('articles.index');
+    // }
+
+    public function store(Request $request, HtmlFilterService $htmlFilterService)
     {
-        // UNSECURE
-        $articleData = $request->all();
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'content' => ['required', 'string'],
+        ]);
 
-        // SECURE
-        //$articleData['content'] = $htmlFilterService->filterHtml($articleData['content']);
-
-        if (!key_exists('user_id', $articleData)) {
-            $articleData['user_id'] = Auth::id();
-        }
-
-        $article = Article::create($articleData);
+        $article = Article::create([
+            'title' => $validated['title'],
+            'content' => $htmlFilterService->filterHtml($validated['content']),
+            'user_id' => Auth::id(),
+            'published' => false,
+        ]);
 
         if ($request->wantsJson()) {
             return response()->json($article, 201);

@@ -176,3 +176,14 @@ Nella sezioni di creazione articolo, precisamente nel caricamento immagini. È s
 - Impostato tempo massimo di richiesta, bloccato reindirizzamenti e verifica del certificato ssl
 - Accettazione di file con estensioni di specifiche (jpeg, png, gif, webp)
 - grandezza immagine massima
+
+**Framework Security**
+- Mass Assignamente Attack
+  - Gestione del fillable e validazione su aggiornamento dati utente da utente
+- CSRF Attack
+  - Itrodotto form per modifica utente in admin e accetazione articoli, e cambiate rotte in post
+- XSS Attack
+  - Attivato il servizio di filtraggio ed auto elliminazione degli script inseriti nel body del dell articolo
+  - Aggiunte validazioni dati
+- Path Traversal Attack
+  - controllo del percoso del file sia corretto altrimenti blocca
